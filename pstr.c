@@ -1,27 +1,27 @@
 #include "monty.h"
 
 /**
- * pstr - Prints the string starting at the top of the stack,
+ * f_pstr - Prints the string starting at the top of the stack,
  * followed by a new line
- * @stack: The head of the stack
- * @line_number: The line on which the error occurred
+ * @head: The head of the stack
+ * @counter: The line on which the error occurred
  *
  * Return: Nothing
  */
-
-void pstr(stack_t **stack, unsigned int line_number)
+void f_pstr(stack_t **head, unsigned int counter)
 {
-	stack_t *curr = *stack;
-	(void) line_number;
+	stack_t *h;
+	(void)counter;
 
-	while (curr != NULL)
+	h = *head;
+	while (h)
 	{
-		if (curr->n == 0 || curr->n < 0 || curr->n > 127)
+		if (h->n > 127 || h->n <= 0)
+		{
 			break;
-
-		printf("%c", curr->n);
-		curr = curr->next;
+		}
+		printf("%c", h->n);
+		h = h->next;
 	}
-
 	printf("\n");
 }

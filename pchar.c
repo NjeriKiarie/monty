@@ -1,21 +1,33 @@
 #include "monty.h"
 
 /**
-  * pchar - Prints the char at the top of the stack,
+  * f_pchar - Prints the char at the top of the stack,
   * followed by a new line
-  * @stack: The head of the stack
-  * @line_number: The line on which the error occurred
+  * @head: The head of the stack
+  * @counter: The line on which the error occurred
   *
   * Return: Nothing
   */
-
-void pchar(stack_t **stack, unsigned int line_number)
+void f_pchar(stack_t **head, unsigned int counter)
 {
-	if (*stack == NULL)
-		handle_error(ERR_PCH_EMP, NULL, line_number, NULL);
+	stack_t *h;
 
-	if ((*stack)->n >= 0 && (*stack)->n <= 127)
-		printf("%c\n", (*stack)->n);
-	else
-		handle_error(ERR_PCH_USG, NULL, line_number, NULL);
+	h = *head;
+	if (!h)
+	{
+		fprintf(stderr, "L%d: can't pchar, stack empty\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE);
+	}
+	if (h->n > 127 || h->n < 0)
+	{
+		fprintf(stderr, "L%d: can't pchar, value out of range\n", counter);
+		fclose(bus.file);
+		free(bus.content);
+		free_stack(*head);
+		exit(EXIT_FAILURE);
+	}
+	printf("%c\n", h->n);
 }
